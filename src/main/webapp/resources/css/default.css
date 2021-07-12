@@ -1,0 +1,126 @@
+html {
+    background-color: #cdd0d7;
+}
+body {
+    font-family: fantasy;
+}
+#user-banner-form a {
+    color: #bac3c3;
+}
+h1 {
+    font-size: 50px;
+    margin-top: 0.7em;
+    margin-bottom: 0.2em;
+}
+body > section.page-footer{
+    color: white;
+    background-color: #050505c4;
+    width: 100%;
+    left: 0;
+    position: absolute;
+    font-family: Arial, sans-serif;
+    font-size: small;
+}
+#user-banner-form {
+    text-align: center;
+    z-index:1;
+    color: white;
+    background-color: #050505c4;
+    width: 120em;
+    left: 0;
+    top: 0;
+    position: fixed;
+}
+.page-header{
+    margin-top: 3em;
+}
+.page-header, .item-summery, .page-footer, .sign-in, .top-bar {
+    padding: 0.5em;
+}
+
+.sign-in > p{
+    margin: 0;
+}
+
+
+
+.page-header h1{
+    color:#414245;
+
+}
+.item-summery {
+    background-color: #fefefeb0;
+}
+
+section.item-summery h2 {
+    margin-block-start: 0;
+}
+section.item-summery td {
+    vertical-align: center;
+}
+section.item-summery img {
+    height: 12em;
+    border-radius: 0.5em;
+}
+
+section.item-details img{
+    height: 24em;
+    border-radius: 0.5em;
+}
+
+section.item-details table {
+    border-collapse: separate;
+    border-spacing: 0.5em 0;
+}
+
+section.item-details td {
+    padding: 0.2em 0;
+}
+
+body > section.item-details > table > tbody > tr > td:nth-child(2){
+    vertical-align: bottom;
+}
+
+.details-row-left, .details-row-right{
+    font-size: 1em;
+}
+
+#item-list > td{
+    width: 150px;
+    height: 150px;
+    padding: 10px;
+}
+
+.error {
+    color: #b12222;
+    font-family: system-ui;
+    font-size: 0.8em;
+}
+
+.icon{
+    height: 3em;
+}
+.icon-link{
+    text-decoration: none;
+}
+.circle{
+    width: 2em;
+    height: 2em;
+    line-height: 2em;
+    border-radius: 100%;
+    font-size: 1em;
+    color: #fff;
+    text-align: center;
+    background: #000
+}
+
+.companyHeaderGrid.ui-panelgrid>*>tr,
+.companyHeaderGrid.ui-panelgrid .ui-panelgrid-cell {
+    border: none;
+}
+#usersForm, #inventoryForm, #ordersForm{
+    padding-top: 2em;
+}
+.newButton{
+    background-color: #98c4e4;
+}

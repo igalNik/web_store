@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+
+<h:head>
+    <title>JSF - Clothing Store</title>
+</h:head>
+
+<f:view>
+    <section id="item-list">
+    <ui:composition template="resources/Templates/page_template.xhtml">
+        <ui:param name="pageTitle" value="Orders"/>
+        <ui:define name="panel-main">
+            <h:form id="ordersForm">
+                <p:growl id="messages" showDetail="true"/>
+
+                <p:dataTable id="ordersDT" value="#{orderService.ordersEntityList}" var="order"  widgetVar="50" editable="true"
+                             styleClass="orders-table"
+                             headerClass="orders-header"
+                             rowClasses="orders-row-odd,orders-row-even"
+                             columnClasses="orders-col-orderid, orders-col-userid, orders-col-createdat,
+                                            order-col-editedat, orders-col-for, orders-col-city,
+                                            order-col-sddress, order-col-zip, orders-col-status,
+                                            order-col-amount, order-col-items, order-col-edit, orders-col-delete"
+                             footerClass="orders-footer">
+                    <p:ajax event="rowEdit" listener="#{orderService.onEdit}" update=":ordersForm:messages" />
+                    <p:ajax event="rowEditCancel" listener="#{orderService.onCancel}" update=":ordersForm:messages" />
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Order ID" />
+                        </f:facet>
+                            <h:outputText value="#{order.id}" />
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="User ID" />
+                        </f:facet>
+                            <h:outputText value="#{order.user.id}" />
+                    </p:column>
+
+                    <p:column style="width: 10em">
+                        <f:facet name="header">
+                            <h:outputText value="Created at" />
+                        </f:facet>
+                        <h:outputText p:type="date" value="#{order.formattedCreatedAt}">
+                        </h:outputText>
+                    </p:column>
+
+                    <p:column style="width: 10em">
+                        <f:facet name="header">
+                            <h:outputText value="Edited at" />
+                        </f:facet>
+                        <h:outputText p:type="date" value="#{order.formattedEditedAt}">
+                        </h:outputText>
+                    </p:column>
+
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="for" />
+                        </f:facet>
+                        <p:cellEditor>
+                            <f:facet name="output">
+                                <h:outputText value="#{order.orderFor}" />
+                            </f:facet>
+                            <f:facet name="input">
+                                <p:inputText value="#{order.orderFor}" style="width:100%"/>
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
+
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Shipping City" />
+                        </f:facet>
+                        <p:cellEditor>
+                            <f:facet name="output">
+                                <h:outputText value="#{order.city}" />
+                            </f:facet>
+                            <f:facet name="input">
+                                <p:inputText value="#{order.city}" style="width:100%"/>
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
+
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Shipping Address" />
+                        </f:facet>
+                        <p:cellEditor>
+                            <f:facet name="output">
+                                <h:outputText value="#{order.address}" />
+                            </f:facet>
+                            <f:facet name="input">
+                                <p:inputText value="#{order.address}"
+                                />
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
+
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Zip" />
+                        </f:facet>
+                        <p:cellEditor>
+                            <f:facet name="output">
+                                <h:outputText value="#{order.zip}" />
+                            </f:facet>
+                            <f:facet name="input">
+                                <p:inputText value="#{order.zip}"/>
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
+
+                    <p:column style="width: 8em;">
+                        <f:facet name="header">
+                            <h:outputText value="Status" />
+                        </f:facet>
+                        <p:cellEditor>
+                            <f:facet name="output">
+                                <h:outputText value="#{order.status}" />
+                            </f:facet>
+                            <f:facet name="input">
+                                <p:selectOneMenu id="cardType" value="#{order.status}" style="width: 80%;">
+                                    <f:selectItem itemLabel="#{orderService.statuses[0].toString()}" itemValue="#{orderService.statuses[0].toString()}"/>
+                                    <f:selectItem itemLabel="#{orderService.statuses[1].toString()}" itemValue="#{orderService.statuses[1].toString()}"/>
+                                    <f:selectItem itemLabel="#{orderService.statuses[2].toString()}" itemValue="#{orderService.statuses[2].toString()}"/>
+                                    <f:selectItem itemLabel="#{orderService.statuses[3].toString()}" itemValue="#{orderService.statuses[3].toString()}"/>
+                                </p:selectOneMenu>
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
+
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Order Amount" />
+                        </f:facet>
+                        <p:cellEditor>
+                            <f:facet name="output">
+                                <h:outputText value="#{order.amount}">
+                                    <f:convertNumber type="currency" currencySymbol="₪"/>
+                                </h:outputText>
+                            </f:facet>
+                            <f:facet name="input">
+                                <p:inputText value="#{order.amount}" style="width:100%"/>
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Items" />
+                        </f:facet>
+                        <p:commandButton value="Items" action="#{itemLinesViewBean.passOrder(order)}"/>
+                    </p:column>
+                    <p:column headerText="Edit" >
+                        <p:rowEditor />
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Delete" />
+                        </f:facet>
+                        <p:commandButton value="Remove" action="#{orderService.onRemove(order)}"
+                                         update="ordersDT :ordersForm:messages"
+                                         style="background-color: #e35353">
+
+                            <f:ajax render="ordersDT"/>
+                        </p:commandButton>
+                    </p:column>
+                </p:dataTable>
+
+            </h:form>
+        </ui:define>
+    </ui:composition>
+    </section>
+
+</f:view>
+
+
+</html>

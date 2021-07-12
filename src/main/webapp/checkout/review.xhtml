@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+<ui:composition>
+    <ui:param name="pageTitle" value="-Checkout-review"/>
+    <h2><h:outputLabel value="Order riview"/> </h2>
+        <h:panelGrid columns="3">
+            <p:panelGrid columns="1">
+                <f:facet name = "header">
+                    <p:outputLabel value="Reciver"/>
+                </f:facet>
+                <p:outputLabel value="#{checkout.order.user.firstName} #{checkout.order.user.lastName}"/>
+                <p:outputLabel value="#{checkout.order.user.userId}"/>
+                <p:outputLabel value="#{checkout.order.user.phone}"/>
+            </p:panelGrid>
+
+
+            <p:panelGrid columns="1">
+                <f:facet name = "header">
+                    <p:outputLabel value="Shipping"/>
+                </f:facet>
+                <p:outputLabel value="#{checkout.order.user.city}"/>
+                <p:outputLabel value="#{checkout.order.user.address}"/>
+                <p:outputLabel value="#{checkout.order.user.zip}"/>
+            </p:panelGrid>
+
+
+            <p:panelGrid columns="1">
+                <f:facet name = "header">
+                    <p:outputLabel value="Payment"/>
+                </f:facet>
+                <p:outputLabel value="#{checkout.nameOnCard}"/>
+                <p:outputLabel value="#{checkout.cardType}"/>
+                <p:outputLabel value="#{checkout.cardNumber}"/>
+            </p:panelGrid>
+        </h:panelGrid>
+
+        <p:dataTable id="cartDT" value="#{checkout.order.items}" var="line"
+                     styleClass="cart-table"
+                     headerClass="cart-header"
+                     rowClasses="cart-row-odd,cart-row-even"
+                     columnClasses="cart-col-image, cart-col-type, cart-col-derscription,
+                                            cart-col-price, cart-col-quantity, cart-col-amount"
+                     footerClass="shoppingcart-footer">
+
+            <p:column>
+                <f:facet name="header">Image</f:facet>
+                <h:graphicImage library="images" name="#{line.item.imageName}"
+                                style="height: 5em;
+                                        border-radius: 0.7em"/>
+            </p:column>
+
+            <p:column>
+                <f:facet name="header">Item</f:facet>
+                <h:outputLabel value="#{line.item.type}">
+                    <ui:param name="item" value="#{line.item}"/>
+                </h:outputLabel>
+            </p:column>
+
+            <p:column>
+                <f:facet name="header">Description</f:facet>
+                #{line.item.description}
+            </p:column>
+
+            <p:column>
+                <f:facet name="header">Price</f:facet>
+                #{line.item.price}
+            </p:column>
+
+            <p:column>
+                <f:facet name="header">Quantity</f:facet>
+                #{line.quantity}
+                <p:commandButton value="+" action="#{cartBean.addItem(line.item)}" update="cartDT">
+                    <f:ajax render="@form user-banner" />
+                </p:commandButton>
+                <p:commandButton value="-" action="#{cartBean.removeItem(line.item)}" update="cartDT">
+                    <f:ajax render="@form user-banner" />
+                </p:commandButton>
+            </p:column>
+
+            <p:column>
+                <f:facet name="header">Amount</f:facet>
+                #{line.amount}
+                <f:facet name="footer">#{cartBean.totalAmount}</f:facet>
+            </p:column>
+
+        </p:dataTable>
+</ui:composition>
+</html>

@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+
+<f:view>
+    <ui:composition template="resources/Templates/page_template.xhtml">
+        <ui:define name="panel-main">
+            <section class="item-registration">
+
+                <h:form id="itemRegistrationForm" prependid="false" enctype="multipart/form-data" rendered="true">
+                <p:selectBooleanCheckbox id="fromExistCheckBox" value="#{itemRegistrationBean.fromExist}" >
+                        <p:ajax render="fromExist existLbl lookUpItemID" update="fromExistCheckBox fromExist existLbl lookUpItemID @this"/>
+                    </p:selectBooleanCheckbox>
+                    <p:outputLabel value=" Select from existing item"/>
+                    <p>
+                        <h:panelGroup id="fromExist" columns="4" rendered="true">
+                            <p:outputLabel id="existLbl" value="Enter Item ID" rendered="#{itemRegistrationBean.fromExist}" />
+
+                            <p:inputText id="lookUpItemID" rendered="#{itemRegistrationBean.fromExist}"
+                                         value="#{itemRegistrationBean.itemToLoadId}" >
+                                <f:ajax event="blur" render="item-registration-grid" execute="lookUpItemID" />
+                            </p:inputText>
+
+                            <p:commandButton id="loadButton" value="Load" action="#{itemRegistrationBean.loadItem}" update="@form"
+                                             rendered="#{itemRegistrationBean.fromExist}" process="@this">
+                            </p:commandButton>
+                        </h:panelGroup>
+                    </p>
+                    <h:panelGrid id="item-registration-grid" columns="3" rendered="true">
+
+                        <p:outputLabel value="Gender"/>
+                        <p:selectOneMenu id="genderSelect" value="#{itemRegistrationBean.item.gender}" style="width: 80%;">
+                            <f:selectItem  itemLabel="Men" itemValue="Men"/>
+                            <f:selectItem  itemLabel="Women" itemValue="Women"/>
+                        </p:selectOneMenu>
+                        <h:panelGrid/>
+
+
+                        <p:outputLabel value="Type"/>
+                        <p:inputText id="type" required="true" maxlength="20"
+                                     requiredMessage="Type is a required field"
+                                     validatorMessage="Can contain characters or numbers in separate words with spase or '-' seperator , max length 30"
+                                     value="#{itemRegistrationBean.item.type}">
+                            <f:validateRegex pattern="^(?=.{3,30}$)((([a-zA-Z]+(\s|-)))|(([0-9]+)\s))*((([a-zA-Z]+))|(([0-9]+)))$"/>
+                            <f:ajax event="blur" render="typeMsg"/>
+
+                        </p:inputText>
+                        <p:message id="typeMsg" for="type" styleClass="error"/>
+
+                        <p:outputLabel value="Style"/>
+                        <p:inputText id="style" required="true" maxlength="30"
+                                     requiredMessage="Style is a required field"
+                                     value="#{itemRegistrationBean.item.style}">
+                            <f:ajax event="blur" render="styleMsg"/>
+                        </p:inputText>
+                        <p:message id="styleMsg" for="style" styleClass="error"/>
+
+                        <p:outputLabel value="Season"/>
+                        <p:selectOneMenu id="seasonSelect" value="#{itemRegistrationBean.item.season}"
+                                         style="width: 80%;">
+                            <f:selectItem  itemLabel="Summer" itemValue="Summer"/>
+                            <f:selectItem  itemLabel="Spring/Fall" itemValue="Spring/Fall"/>
+                            <f:selectItem  itemLabel="Winter" itemValue="Winter"/>
+                        </p:selectOneMenu>
+                        <h:panelGrid/>
+                        <p:outputLabel value="Pattern Type"/>
+
+                        <p:inputText id="pattern-type" required="true" maxlength="30"
+                                     requiredMessage="pattern-type is a required field"
+                                     validatorMessage="Can contain characters or numbers in separate words with spase or '-' seperator , max length 30"
+
+                                     value="#{itemRegistrationBean.item.patternType}">
+                            <f:validateRegex pattern="^(?=.{3,30}$)((([a-zA-Z]+(\s|-)))|(([0-9]+)\s))*((([a-zA-Z]+))|(([0-9]+)))$"/>
+
+                            <f:ajax event="blur" render="patternMsg"/>
+                        </p:inputText>
+                        <p:message id="patternMsg" for="pattern-type" styleClass="error"/>
+
+                        <p:outputLabel value="Color"/>
+                        <p:inputText id="color" required="true" maxlength="30"
+                                     requiredMessage="Color is a required field"
+                                     validatorMessage="Can contain characters or numbers in separate words with spase or '-' seperator , max length 30"
+                                     value="#{itemRegistrationBean.item.color}">
+                            <f:validateRegex pattern="^(?=.{3,30}$)((([a-zA-Z]+(\s|-)))|(([0-9]+)\s))*((([a-zA-Z]+))|(([0-9]+)))$"/>
+                            <f:ajax event="blur" render="colorMsg"/>
+                        </p:inputText>
+                        <p:message id="colorMsg" for="color" styleClass="error"/>
+
+                        <p:outputLabel value="Size"/>
+                        <p:selectOneMenu id="sizeSelect" value="#{itemRegistrationBean.item.size}" style="width: 80%;">
+                            <f:selectItem  itemLabel="XS" itemValue="XS"/>
+                            <f:selectItem  itemLabel="S" itemValue="S"/>
+                            <f:selectItem  itemLabel="M" itemValue="M"/>
+                            <f:selectItem  itemLabel="L" itemValue="L"/>
+                            <f:selectItem  itemLabel="XL" itemValue="XL"/>
+                        </p:selectOneMenu>
+                        <p:message id="sizeMsg" for="sizeSelect" styleClass="error"/>
+
+                        <p:outputLabel value="Material"/>
+                        <p:inputText id="material" required="true" maxlength="30"
+                                     requiredMessage="Material is a required field"
+                                     validatorMessage="Can contain characters or numbers in separate words with spase or '-' seperator , max length 30"
+                                     value="#{itemRegistrationBean.item.material}">
+                            <f:validateRegex pattern="^(?=.{3,30}$)((([a-zA-Z]+(\s|-)))|(([0-9]+)\s))*((([a-zA-Z]+))|(([0-9]+)))$"/>
+                            <f:ajax event="blur" render="materialMsg"/>
+                        </p:inputText>
+                        <p:message id="materialMsg" for="material" styleClass="error"/>
+
+                        <p:outputLabel value="Description"/>
+                        <p:inputTextarea id="description" required="true" maxlength="100"
+                                         requiredMessage="Description is a required field"
+                                         validatorMessage="Can contain characters or numbers in separate words with spase or '-' seperator , max length 255"
+                                         value="#{itemRegistrationBean.item.description}">
+
+                            <f:validateRegex pattern="^(?=.{3,255}$)((([a-zA-Z]+(\s|-)))|(([0-9]+)\s))*((([a-zA-Z]+))|(([0-9]+)))$"/>
+                            <f:ajax event="blur" render="descriptionMSg"/>
+                        </p:inputTextarea>
+                        <p:message id="descriptionMSg" for="description" styleClass="error"/>
+
+                        <p:outputLabel value="Quantity"  />
+                        <p:inputText id="quantity" required="true"
+                                     requiredMessage="Quantity is a required field"
+                                     validatorMessage="must be a number within 0 to 1000000"
+                                     value="#{itemRegistrationBean.item.quantity}">
+                            <f:validateLongRange minimum="0" maximum="1000000"  />
+                            <f:ajax event="blur" render="quantityMsg"/>
+                        </p:inputText>
+                        <p:message id="quantityMsg" for="quantity" styleClass="error"/>
+
+                        <p:outputLabel value="Price"/>
+                        <p:inputText id="price" required="true"
+                                     requiredMessage="price is a required field"
+                                     validatorMessage="must be a number within 0 to 1000000"
+                                     value="#{itemRegistrationBean.item.price}">
+                            <f:validateDoubleRange minimum = "0" maximum = "1000000" />
+                            <f:ajax event="blur" render="priceMsg"/>
+                        </p:inputText>
+                        <p:message id="priceMsg" for="price" styleClass="error"/>
+
+                        <p:outputLabel value="Choose image"/>
+                        <h:inputFile id="file" value="#{itemRegistrationBean.file}" required="true"
+                                     requiredMessage="Image file is required">
+                            <f:ajax event="change" render="fileMsg fileUploagMsg"/>
+                        </h:inputFile>
+                        <p:message id="fileMsg" for="file" styleClass="error"/>
+                    </h:panelGrid>
+                    <p><h:commandButton id="submitBtn" value="Submit" action="#{itemRegistrationBean.submit}">
+                        <f:ajax render= "@form" execute="@form"/>
+                    </h:commandButton></p>
+                    <p:message id="submitMsg" for="submitBtn" styleClass="error" />
+
+            </h:form>
+            </section>
+
+        </ui:define>
+    </ui:composition>
+</f:view>
+</html>

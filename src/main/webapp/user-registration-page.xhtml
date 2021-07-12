@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+<f:view>
+    <ui:composition template="resources/Templates/page_template.xhtml">
+        <ui:param name="pageTitle" value="Registration"/>
+        <ui:define name="panel-main">
+                <section class="registration">
+                    <h:messages styleClass="error" style="font-size: medium;"/>
+
+                    <h:form id="userRegistration">
+                        <h:outputLink value="index.xhtml">Back to Home Page</h:outputLink>
+                        <h:panelGrid id="registration-grid" columns="3">
+                            <ui:fragment rendered="#{userManagerBean.manager}">
+                                <p:outputLabel value="Manager"/>
+                            </ui:fragment>
+                            <ui:fragment rendered="#{userManagerBean.manager}">
+                                <p:selectBooleanCheckbox value="#{userRegistrationViewBean.manager}" />
+                            </ui:fragment>
+                            <ui:fragment rendered="#{userManagerBean.manager}">
+                                <h:panelGroup />
+                            </ui:fragment>
+
+                            <p:outputLabel value="First Name"/>
+                            <p:inputText id="newUserFirstName" required="true"
+                                         requiredMessage="First name is a required field"
+                                         validatorMessage="First name should be 2-20 characters long and contains only characters"
+                                         value="#{userRegistrationViewBean.firstName}">
+                                <f:ajax event="blur" render="firstNameMsg"/>
+                                <f:validateRegex pattern="[a-zA-z]{2,20}"/>
+                            </p:inputText>
+                            <p:message id="firstNameMsg" for="newUserFirstName" styleClass="error"/>
+
+                            <p:outputLabel value="Last Name"/>
+                            <p:inputText id="newUserLastName" required="true"
+                                         requiredMessage="Last name is a required field"
+                                         validatorMessage="Last name should be 2-20 characters long and contains only characters"
+                                         value="#{userRegistrationViewBean.lastName}">
+                                <f:ajax event="blur" render="lastNameMsg"/>
+                                <f:validateRegex pattern="[a-zA-z]{2,20}"/>
+                            </p:inputText>
+                            <p:message id="lastNameMsg" for="newUserLastName" styleClass="error"/>
+
+                            <p:outputLabel value="ID"/>
+                            <p:inputText id="newUserId" required="true"
+                                         validatorMessage="ID should be 9 characters long and contains only digits"
+                                         requiredMessage="ID is a required field"
+                                         value="#{userRegistrationViewBean.userId}">
+                                <f:ajax event="blur" render="idMsg"/>
+                                <f:validateRegex pattern="[0-9]{9}"/>
+                            </p:inputText>
+                            <p:message id="idMsg" for="newUserId" styleClass="error"/>
+
+                            <p:outputLabel value="E-Mail"/>
+                            <p:inputText id="newUserEMail" required="true"
+                                         validatorMessage="Email format is invalid"
+                                         requiredMessage="E-Mail is a required field"
+                                         value="#{userRegistrationViewBean.email}">
+                                <f:ajax event="blur" render="emailMsg"/>
+                                <f:validateRegex pattern="\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*"/>
+                            </p:inputText>
+                            <p:message id="emailMsg" for="newUserEMail" styleClass="error"/>
+
+                            <p:outputLabel value="Phone Number"/>
+                            <p:inputText id="newUserPhoneNumber" required="true"
+                                         requiredMessage="Phone Number is a required field"
+                                         validatorMessage="phone form is 05XX-XXX-XXX"
+                                         value="#{userRegistrationViewBean.phone}">
+
+                                <f:ajax event="blur" render="phoneMsg"/>
+                                <f:validateRegex pattern="05[0-9]{2}[-]?[0-9]{3}[-]?[0-9]{3}"/>
+                            </p:inputText>
+                            <p:message id="phoneMsg" for="newUserPhoneNumber" styleClass="error"/>
+
+                            <p:outputLabel value="City"/>
+                            <p:inputText id="newUserCity" required="true"
+                                         requiredMessage="City is a required field"
+                                         validatorMessage="City can contain only characters"
+                                         value="#{userRegistrationViewBean.city}">
+                                <f:ajax event="blur" render="cityMsg"/>
+                                <f:validateRegex pattern="\w\D{2,}"/>
+                            </p:inputText>
+                            <p:message id="cityMsg" for="newUserCity" styleClass="error"/>
+
+                            <p:outputLabel value="Address"/>
+                            <p:inputText id="newUserAddress" required="true"
+                                         requiredMessage="Address is a required field"
+                                         value="#{userRegistrationViewBean.address}">
+                                <f:ajax event="blur" render="addressMsg"/>
+                            </p:inputText>
+                            <p:message id="addressMsg" for="newUserAddress" styleClass="error"/>
+
+                            <p:outputLabel value="ZIP Code"/>
+                            <p:inputText id="newUserZip" required="true"
+                                         requiredMessage="ZIP Code is a required field"
+                                         validatorMessage="Zip is only digits with max lenth of 6"
+                                         value="#{userRegistrationViewBean.zip}">
+                                <f:ajax event="blur" render="zipMsg"/>
+                                <f:validateRegex pattern="\d{5,6}"/>
+                            </p:inputText>
+                            <p:message id="zipMsg" for="newUserZip" styleClass="error"/>
+
+                            <p:outputLabel value="Password"/>
+                            <p:password id="newUserPassword" required="true"
+                                        requiredMessage="Password is a required field"
+                                        validatorMessage="password should contain: upper and lower case characters ,special char and digit"
+                                        value="#{userRegistrationViewBean.password}">
+                                <f:ajax event="blur" render="passwordMsg"/>
+                                <f:validateRegex pattern="((?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{8,16})" />
+                            </p:password>
+                            <p:message id="passwordMsg" for="newUserPassword" styleClass="error"/>
+                            <p>
+                                <p:commandButton value="Submit" action="#{userRegistrationViewBean.submit}"
+                                                 icon="ui-icon-check" ajax="false"/>
+                            </p>
+
+                        </h:panelGrid>
+
+
+                    </h:form>
+                </section>
+        </ui:define>
+    </ui:composition>
+
+</f:view>
+</html>

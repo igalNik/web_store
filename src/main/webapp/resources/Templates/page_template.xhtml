@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html >
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <Title>Colthing Store - #{pageTitle}</Title>
+
+        <h:outputStylesheet library="css" name="default.css"/>
+    </h:head>
+
+    <h:body>
+        <ui:insert name="panel-top">
+            <ui:include src="Common/user-banner.xhtml"/>
+            <ui:include src="Common/page-header.xhtml"/>
+            <ui:fragment rendered="#{userManagerBean.manager}">
+                <ui:include src="Common/manager-options.xhtml"/>
+            </ui:fragment>
+        </ui:insert>
+
+        <ui:insert name="panel-main">
+            <h:outputLink>here is the main panel</h:outputLink>
+        </ui:insert>
+
+        <ui:insert name="panel-bottom">
+            <ui:include src="Common/page-footer.xhtml"/>
+        </ui:insert>
+
+    </h:body>
+</html>

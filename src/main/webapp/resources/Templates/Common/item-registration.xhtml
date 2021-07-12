@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+<ui:composition>
+    <section class="item-registration">
+        <h:selectBooleanCheckbox id="fromExistCheckBox" value="#{itemRegistrationBean.fromExist}">
+            <p:ajax render="fromExist existLbl lookUpItemID" update="fromExist existLbl lookUpItemID"/>
+        </h:selectBooleanCheckbox>
+        <h:outputLabel value="Select from existing item"/>
+        <p>
+            <h:panelGroup id="fromExist" columns="4" rendered="true">
+                <h:outputLabel id="existLbl" value="Enter Item ID" rendered="#{itemRegistrationBean.fromExist}" />
+
+                <h:inputText id="lookUpItemID" rendered="#{itemRegistrationBean.fromExist}"
+                             value="#{itemRegistrationBean.itemToLoadId}" >
+                    <f:ajax event="blur" render="item-registration-grid" execute="lookUpItemID" />
+                </h:inputText>
+
+                <h:commandButton id="loadButton" value="Load" action="#{itemRegistrationBean.loadItem}"
+                                 rendered="#{itemRegistrationBean.fromExist}" render="item-registration-grid" >
+                    <f:ajax render="item-registration-grid" execute="loadButton" />
+                </h:commandButton>
+            </h:panelGroup>
+        </p>
+        <h:panelGrid id="item-registration-grid" columns="3" rendered="true">
+
+            <h:outputLabel value="Gender"/>
+            <h:selectOneMenu id="genderSelect" value="#{itemRegistrationBean.item.gender}" style="width: 80%;">
+                <f:selectItem  itemLabel="Men" itemValue="Men"/>
+                <f:selectItem  itemLabel="Women" itemValue="Women"/>
+            </h:selectOneMenu>
+            <h:panelGrid/>
+
+
+            <h:outputLabel value="Type"/>
+            <h:inputText id="type" required="true" maxlength="20"
+                         requiredMessage="Type is a required field"
+
+                         value="#{itemRegistrationBean.item.type}">
+                <f:ajax event="blur" render="typeMsg"/>
+
+            </h:inputText>
+            <h:message id="typeMsg" for="type" styleClass="error"/>
+
+            <h:outputLabel value="Style"/>
+            <h:inputText id="style" required="true" maxlength="30"
+                         requiredMessage="Style is a required field"
+                         value="#{itemRegistrationBean.item.style}">
+                <f:ajax event="blur" render="styleMsg"/>
+            </h:inputText>
+            <h:message id="styleMsg" for="style" styleClass="error"/>
+
+            <h:outputLabel value="Season"/>
+            <h:selectOneMenu id="seasonSelect" value="#{itemRegistrationBean.item.season}" style="width: 80%;">
+                <f:selectItem  itemLabel="Summer" itemValue="Summer"/>
+                <f:selectItem  itemLabel="Spring/Fall" itemValue="Spring/Fall"/>
+                <f:selectItem  itemLabel="Winter" itemValue="Winter"/>
+            </h:selectOneMenu>
+            <h:panelGrid/>
+            <h:outputLabel value="Pattern Type"/>
+            <h:inputText id="pattern-type" required="true" maxlength="30"
+                         requiredMessage="pattern-type is a required field"
+                         value="#{itemRegistrationBean.item.patternType}">
+                <f:ajax event="blur" render="patternMsg"/>
+            </h:inputText>
+            <h:message id="patternMsg" for="pattern-type" styleClass="error"/>
+
+            <h:outputLabel value="Color"/>
+            <h:inputText id="color" required="true" maxlength="30"
+                         requiredMessage="Color is a required field"
+                         value="#{itemRegistrationBean.item.color}">
+                <f:ajax event="blur" render="colorMsg"/>
+            </h:inputText>
+            <h:message id="colorMsg" for="color" styleClass="error"/>
+
+            <h:outputLabel value="Size"/>
+            <h:selectOneMenu id="sizeSelect" value="#{itemRegistrationBean.item.size}" style="width: 80%;">
+                <f:selectItem  itemLabel="XS" itemValue="XS"/>
+                <f:selectItem  itemLabel="S" itemValue="S"/>
+                <f:selectItem  itemLabel="M" itemValue="M"/>
+                <f:selectItem  itemLabel="L" itemValue="L"/>
+                <f:selectItem  itemLabel="XL" itemValue="XL"/>
+            </h:selectOneMenu>
+            <h:message id="sizeMsg" for="sizeSelect" styleClass="error"/>
+
+            <h:outputLabel value="Material"/>
+            <h:inputText id="material" required="true" maxlength="30"
+                         requiredMessage="Material is a required field"
+                         value="#{itemRegistrationBean.item.material}">
+                <f:ajax event="blur" render="materialMsg"/>
+            </h:inputText>
+            <h:message id="materialMsg" for="material" styleClass="error"/>
+
+            <h:outputLabel value="Description"/>
+            <h:inputTextarea id="description" required="true" maxlength="100"
+                         requiredMessage="Description is a required field"
+                         value="#{itemRegistrationBean.item.description}">
+                <f:ajax event="blur" render="descriptionMSg"/>
+            </h:inputTextarea>
+            <h:message id="descriptionMSg" for="description" styleClass="error"/>
+
+            <h:outputLabel value="Quantity"  />
+            <h:inputText id="quantity" required="true"
+                           requiredMessage="Quantity is a required field"
+                           value="#{itemRegistrationBean.item.quantity}">
+                <f:ajax event="blur" render="quantityMsg"/>
+            </h:inputText>
+            <h:message id="quantityMsg" for="quantity" styleClass="error"/>
+
+            <h:outputLabel value="Price"/>
+            <h:inputText id="price" required="true"
+                           requiredMessage="price is a required field"
+                           value="#{itemRegistrationBean.item.price}">
+                <f:ajax event="blur" render="priceMsg"/>
+            </h:inputText>
+            <h:message id="priceMsg" for="price" styleClass="error"/>
+
+            <h:outputLabel value="Choose image"/>
+            <h:inputFile id="file" value="#{fileUploadBean.file}" required="true"
+            requiredMessage="Image file is required">
+                <f:ajax event="blur" render="fileMsg fileUploagMsg"/>
+            </h:inputFile>
+            <h:outputLabel id="fileUploagMsg" value="#{fileUploadBean.message}"
+                           rendered="#{!empty fileUploadBean.message}">
+            </h:outputLabel>
+            <h:message id="fileMsg" for="file" styleClass="error"/>
+        </h:panelGrid>
+        <p><h:commandButton value="Submit" action="#{itemRegistrationBean.submit}">
+        </h:commandButton></p>
+
+    </section>
+</ui:composition>
+</html>

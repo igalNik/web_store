@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+
+<ui:composition>
+        <ui:param name="pageTitle" value="Checkout-Shiping"/>
+               <h2><h:outputLabel value="User Details"/> </h2>
+               <p:panelGrid columns="2">
+                   <p:outputLabel value="First Name"/>
+                   <p:outputLabel id="userFirstName"
+                                value="#{checkout.order.user.firstName}"/>
+
+                   <p:outputLabel value="Last Name"/>
+                   <p:outputLabel id="userLastName"
+                              value="#{checkout.order.user.lastName}"/>
+
+                   <p:outputLabel value="ID"/>
+                   <p:outputLabel id="userId"
+                              value="#{checkout.order.user.userId}"/>
+
+                   <p:outputLabel value="E-Mail"/>
+                   <p:outputLabel id="userEMail"
+                                value="#{checkout.order.user.email}"/>
+
+                   <p:outputLabel value="Phone Number"/>
+                   <p:outputLabel id="userPhoneNumber"
+                               value="#{checkout.order.phone}"/>
+               </p:panelGrid>
+
+               <h2><h:outputLabel value="Shipping Details"/></h2>
+
+               <h:panelGrid columns="3">
+                   <p:outputLabel value="Order for (full name)"/>
+                   <p:inputText id="orderFor" required="true"
+                                requiredMessage="Phone Number is a required field"
+                                validatorMessage="Full name consists of 2 to 3 words and a total length of 30 characters"
+                               value="#{checkout.order.orderFor}">
+                       <f:validateRegex pattern="^(?=.{3,30}$)([a-zA-Z]+\s{1}[a-zA-Z]{1,}|[a-zA-Z]+\s{1}[a-zA-Z]{3,}\s{1}[a-zA-Z]{1,})$"/>
+                       <f:ajax event="blur" render="fullNameMsg" execute="@this"/>
+                   </p:inputText>
+                   <p:message id="fullNameMsg" for="orderFor" styleClass="error"/>
+
+                   <p:outputLabel value="City"/>
+                   <p:inputText id="city" required="true"
+                                requiredMessage="City is a required field"
+                                validatorMessage="City can contain laters with max length of 30 characters"
+                                value="#{checkout.order.city}">
+                       <f:validateRegex pattern="^[a-zA-Z]{2,30}"/>
+                       <f:ajax event="blur" render="cityMsg" execute="@this"/>
+                   </p:inputText>
+                   <p:message id="cityMsg" for="city" styleClass="error"/>
+
+                   <p:outputLabel value="Address"/>
+                   <p:inputText id="address" required="true"
+                                requiredMessage="Address is a required field"
+                                validatorMessage="Address pattern is: Shipping address home number/department"
+                                value="#{checkout.order.address}">
+                       <f:validateRegex pattern="^(?=.{3,100}$)([a-zA-Z]+\s?)+\d{1,6}(\\\d{1,6})?$"/>
+                       <f:ajax event="blur" render="addressMsg" execute="@this"/>
+                   </p:inputText>
+                   <p:message id="addressMsg" for="address" styleClass="error"/>
+
+                   <p:outputLabel value="ZIP"/>
+                   <p:inputText id="zip" required="true"
+                                requiredMessage="ZIP Code is a required field"
+                                validatorMessage="Zip code consists of 5 to 6 digits"
+                                value="#{checkout.order.zip}">
+                       <f:validateRegex pattern="\d{5,6}"/>
+                       <f:ajax event="blur" render="zipMsg"  execute="@this"/>
+                   </p:inputText>
+                   <p:message id="zipMsg" for="zip" styleClass="error"/>
+
+               </h:panelGrid>
+    </ui:composition>
+</html>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Created by IntelliJ IDEA.
+  User: igal
+  Date: 11/03/2021
+  Time: 13:16
+-->
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+
+<h:head>
+    <title>JSF - Clothing Store</title>
+
+</h:head>
+
+<f:view>
+    <ui:composition template="resources/Templates/page_template.xhtml">
+        <ui:param name="pageTitle" value="Manager Home Page"/>
+
+        <ui:define name="panel-main">
+            <ui:repeat value="#{ItemService.itemsEntityList}" var="item">
+                <ui:decorate template="resources/Templates/Common/item-summery.xhtml">
+                    <ui:param name="item" value="#{item}"/>
+                    <ui:param name="returnPage" value="index.xhtml"/>
+                </ui:decorate>
+            </ui:repeat>
+        </ui:define>
+
+    </ui:composition>
+</f:view>
+</html>

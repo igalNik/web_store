@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:composition>
+        <section class="top-bar">
+            <h:form>
+                <h:panelGrid id="top-bar" columns="3">
+                    <h:outputLabel value="Search"/>
+                    <h:inputText value="#{itemViewBean.searchValue}"/>
+                    <h:commandButton value="Search product" action="#{itemViewBean.search}">
+                        <f:ajax render="itemsViewForm"/>
+                    </h:commandButton>
+                </h:panelGrid>
+            </h:form>
+        </section>
+    </ui:composition>
+</html>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <section class="item-summery">
+            <h:panelGrid columns="2" rendered="true">
+                <p:graphicImage library="images" name="#{item.imageName}"/>
+                <h:panelGrid id="item-summery-data" columns="1">
+                    <h:outputLabel id="description-value" value="#{item.description}"/>
+
+                    <h:panelGrid styleClass="row" columns="2">
+                        <h:outputLabel id="genderlabel" value="For:"/>
+                        <h:outputLabel id="gender-value" value="#{item.gender}"/>
+                    </h:panelGrid>
+
+                    <h:panelGrid styleClass="row" columns="2">
+                        <h:outputLabel id="pattern-type-label" value="Pattern Type:"/>
+                        <h:outputLabel id="pattern-type-value" value="#{item.patternType}"/>
+                    </h:panelGrid>
+
+                    <h:panelGrid styleClass="row" columns="2">
+                        <h:outputLabel id="style-label" value="Style:"/>
+                        <h:outputLabel id="style-value" value="#{item.style}"/>
+                    </h:panelGrid>
+
+                    <h:panelGrid styleClass="row" columns="3">
+                        <h:outputLabel id="price-label" value="price:"/>
+                        <h:outputLabel id="price-value" value="#{item.price}"/>
+                        <ui:fragment id="notInStockLbl" rendered ="#{item.quantity eq 0}">
+                            <h:outputLabel value="not in stock" style="color: #b12222;"/>
+                        </ui:fragment>
+                        <ui:fragment id="addBtn" rendered="#{item.quantity gt 0}">
+                            <h:commandLink action="#{cartBean.addItem(item)}">Add to cart
+                                <f:ajax execute="@this" render="user-banner-form :itemsViewForm:messages"/>
+                            </h:commandLink>
+                        </ui:fragment>
+
+                    </h:panelGrid>
+
+                    <h:commandLink value="item details" action="#{itemViewBean.goToItem(item)}">
+                        <ui:param name="item" value="#{item}"/>
+                    </h:commandLink>
+
+                </h:panelGrid>
+            </h:panelGrid>
+        </section>
+    </ui:composition>
+</html>

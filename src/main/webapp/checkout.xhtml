@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+<f:view>
+    <ui:composition template="resources/Templates/page_template.xhtml">
+        <ui:param name="pageTitle" value="Checkout"/>
+        <ui:define name="panel-main">
+            <h:form styleClass="checkout">
+                <ui:fragment rendered="#{checkout.result_failure or checkout.result_success}">
+                    <ui:decorate template="checkout/checkout-result.xhtml">
+                    </ui:decorate>
+                </ui:fragment>
+                <ui:fragment rendered="#{checkout.userAndShipping}">
+                    <ui:decorate template="checkout/user-shipping-details.xhtml">
+                    </ui:decorate>
+                </ui:fragment>
+                <ui:fragment rendered="#{checkout.payment}">
+                    <ui:decorate template="checkout/payment.xhtml">
+                    </ui:decorate>
+                </ui:fragment>
+                <ui:fragment rendered="#{checkout.review}">
+                    <ui:decorate template="checkout/review.xhtml">
+                    </ui:decorate>
+                </ui:fragment>
+
+                <h:panelGrid columns="4">
+                    <p:commandButton value="Back" action="#{checkout.back()}"
+                                     immediate="true"
+                                     disabled="#{not checkout.backButton}" >
+                        <f:ajax render="@form"/>
+                    </p:commandButton>
+                    <p:commandButton value="Cancel" action="index" update="@form"
+                                     immediate="true"
+                                     rendered="#{checkout.cancelButton}">
+                        <f:ajax render="@form"/>
+                    </p:commandButton>
+                    <p:commandButton value="Next" action="#{checkout.next()}" update="@form"
+                                     disabled="#{not checkout.nextButton}">
+                        <f:ajax render="@form"/>
+                    </p:commandButton>
+                    <p:commandButton value="Place Order" action="#{checkout.placeOrder()}" update="@form"
+                    rendered="#{checkout.placeOrderButton}">
+                        <f:ajax render="@form"/>
+                    </p:commandButton>
+                    <p:commandButton value="Return to Home page" action="index?faces-redirect=true"
+                                     rendered="#{checkout.result_failure or checkout.result_success}">
+                        <f:ajax render="@form"/>
+                    </p:commandButton>
+
+                </h:panelGrid>
+
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</f:view>
+</html>

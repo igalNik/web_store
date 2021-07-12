@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+
+
+<f:view>
+    <section id="item-list">
+        <ui:composition template="resources/Templates/page_template.xhtml">
+            <ui:param name="pageTitle" value="Inventory"/>
+            <ui:define name="panel-main">
+                <h:form id="inventoryForm">
+
+                    <p:growl id="messages" showDetail="true"/>
+                    <p:commandButton value="Creat new item" action="item-registration-page"
+                                     styleClass="newButton" />
+                    <p:dataTable id="inventoryDT" value="#{itemService.itemEntityList}" var="item"
+                                  widgetVar="50" editable="true">
+                        <p:ajax event="rowEdit" listener="#{itemService.onEdit}" update=":inventoryForm:messages" />
+                        <p:ajax event="rowEditCancel" listener="#{itemService.onCancel}" update=":inventoryForm:messages" />
+                        <p:ajax event="rowSelect" listener="#{itemsViewBean.onRowSelect}" update=":inventoryForm:messages"/>
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Image"/>
+                            </f:facet>
+                            <p:graphicImage library="images" name="#{item.imageName}"
+                                            style="height: 5em;
+                                        border-radius: 0.7em"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="ID"/>
+                            </f:facet>
+                            <p:outputLabel value="#{item.id}"/>
+                        </p:column>
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Type" />
+                            </f:facet>
+                            <p:cellEditor>
+                                <f:facet name="output">
+                                    <h:outputText value="#{item.type}" />
+                                </f:facet>
+                                <f:facet name="input">
+                                    <p:inputText value="#{item.type}"/>
+                                </f:facet>
+                            </p:cellEditor>
+                        </p:column>
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Style" />
+                            </f:facet>
+                            <p:cellEditor>
+                                <f:facet name="output">
+                                    <h:outputText value="#{item.style}" />
+                                </f:facet>
+                                <f:facet name="input">
+                                    <p:inputText value="#{item.style}"/>
+                                </f:facet>
+                            </p:cellEditor>
+                        </p:column>
+
+                        <p:column style="width: 15em;">
+                            <f:facet name="header">
+                                <h:outputText value="Season" />
+                            </f:facet>
+                            <p:cellEditor>
+                                <f:facet name="output">
+                                    <h:outputText value="#{item.season}" />
+                                </f:facet>
+                                <f:facet name="input">
+                                    <p:selectOneMenu id="seasonSelect" value="#{item.season}" style="width: 80%;">
+                                        <f:selectItem  itemLabel="Summer" itemValue="Summer"/>
+                                        <f:selectItem  itemLabel="Spring/Fall" itemValue="Spring/Fall"/>
+                                        <f:selectItem  itemLabel="Winter" itemValue="Winter"/>
+                                    </p:selectOneMenu>
+                                </f:facet>
+                            </p:cellEditor>
+                        </p:column>
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Pattern Type" />
+                            </f:facet>
+                            <p:cellEditor>
+                                <f:facet name="output">
+                                    <h:outputText value="#{item.patternType}" />
+                                </f:facet>
+                                <f:facet name="input">
+                                    <p:inputText value="#{item.patternType}"/>
+                                </f:facet>
+                            </p:cellEditor>
+                        </p:column>
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Color" />
+                            </f:facet>
+                            <p:cellEditor>
+                                <f:facet name="output">
+                                    <h:outputText value="#{item.color}" />
+                                </f:facet>
+                                <f:facet name="input">
+                                    <p:inputText value="#{item.color}"/>
+                                </f:facet>
+                            </p:cellEditor>
+                        </p:column>
+
+                        <p:column style="width: 15em;">
+                            <f:facet name="header">
+                                <h:outputText value="Size" />
+                            </f:facet>
+                            <p:cellEditor>
+                                <f:facet name="output">
+                                    <h:outputText value="#{item.size}" />
+                                </f:facet>
+                                <f:facet name="input">
+                                    <p:selectOneMenu id="sizeSelect" value="#{item.size}" style="width: 80%;">
+                                        <f:selectItem  itemLabel="XS" itemValue="XS"/>
+                                        <f:selectItem  itemLabel="S" itemValue="S"/>
+                                        <f:selectItem  itemLabel="M" itemValue="M"/>
+                                        <f:selectItem  itemLabel="L" itemValue="L"/>
+                                        <f:selectItem  itemLabel="XL" itemValue="XL"/>
+                                    </p:selectOneMenu>
+                                </f:facet>
+                            </p:cellEditor>
+                        </p:column>
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Material" />
+                            </f:facet>
+                            <p:cellEditor>
+                                <f:facet name="output">
+                                    <h:outputText value="#{item.material}" />
+                                </f:facet>
+                                <f:facet name="input">
+                                    <p:inputText value="#{item.material}"/>
+                                </f:facet>
+                            </p:cellEditor>
+                        </p:column>
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Description" />
+                            </f:facet>
+                            <p:cellEditor>
+                                <f:facet name="output">
+                                    <h:outputText value="#{item.description}" />
+                                </f:facet>
+                                <f:facet name="input">
+                                    <p:inputTextarea value="#{item.description}"/>
+                                </f:facet>
+                            </p:cellEditor>
+                        </p:column>
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Price" />
+                            </f:facet>
+                            <p:cellEditor>
+                                <f:facet name="output">
+                                    <h:outputText value="#{item.price}">
+                                        <f:convertNumber type="currency" currencySymbol="₪"/>
+                                    </h:outputText>
+                                </f:facet>
+                                <f:facet name="input">
+                                    <p:inputText value="#{item.price}" style="width:100%"/>
+                                </f:facet>
+                            </p:cellEditor>
+                        </p:column>
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Quantity" />
+                            </f:facet>
+                            <p:cellEditor>
+                                <f:facet name="output">
+                                    <h:outputText value="#{item.quantity}">
+                                    </h:outputText>
+                                </f:facet>
+                                <f:facet name="input">
+                                    <p:inputText value="#{item.quantity}" style="width:100%"/>
+                                </f:facet>
+                            </p:cellEditor>
+                        </p:column>
+
+                        <p:column headerText="Edit" >
+                            <p:rowEditor/>
+                        </p:column>
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Delete" />
+                            </f:facet>
+                            <p:commandButton value="Remove" action="#{itemService.onRemove(item)}"
+                                             update="inventoryDT :inventoryForm:messages"
+                                             style="background-color: #e35353">
+                                <f:ajax render="inventoryDT"/>
+                            </p:commandButton>
+                        </p:column>
+                    </p:dataTable>
+
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </section>
+
+</f:view>
+
+
+</html>

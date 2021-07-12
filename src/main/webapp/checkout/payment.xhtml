@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+<ui:composition>
+    <ui:param name="pageTitle" value="-Checkout-payment"/>
+            <h2><h:outputLabel value="Payment Details"/> </h2>
+
+            <h:panelGrid columns="3" style="border: none">
+                <p:outputLabel value="Credit card type"/>
+                <p:selectOneMenu id="cardType" value="#{checkout.cardType}" rendered="true"
+                    validatorMessage="Card type not selected">
+                    <f:selectItem itemValue="NONE" itemLabel="--select--" />
+                    <f:selectItem itemLabel="MasterCard" itemValue="MasterCard"/>
+                    <f:selectItem itemLabel="VISA" itemValue="VISA"/>
+                    <f:validateRegex pattern="(^VISA$)|(^MasterCard$)"/>
+                    <f:ajax event="change" render="typeMsg" execute="@this"/>
+                </p:selectOneMenu>
+                <p:message id="typeMsg" for="cardType"/>
+
+                <p:outputLabel value="Credit card number"/>
+                <p:inputText id="card-number" required="true" placeholder="xxxx-xxxx-xxxx-xxxx"
+                             requiredMessage="Card number is a required"
+                             validatorMessage="A card number consists of 16 digits"
+                             value="#{checkout.cardNumber}">
+                    <f:validateRegex pattern="^(\d{4}-?\d{4}-?\d{4}-?\d{4})$"/>
+                    <f:ajax event="blur" render="cardNumberMsg" execute="@this"/>
+                </p:inputText>
+                <p:message id="cardNumberMsg" for="card-number" styleClass="error"/>
+
+                <p:outputLabel value="Name on card"/>
+                <p:inputText id="name-on-card" required="true" placeholder="example: Isaac Newton"
+                             requiredMessage="name on card is a required field"
+                             validatorMessage="Full name consists of 2 to 3 words and a total length of 30 characters"
+                             value="#{checkout.nameOnCard}">
+                    <f:validateRegex pattern="^(?=.{3,30}$)([a-zA-Z]+\s{1}[a-zA-Z]{1,}|[a-zA-Z]+\s{1}[a-zA-Z]{3,}\s{1}[a-zA-Z]{1,})$"/>
+                    <f:ajax event="blur" render="nameOnCardMsg" execute="@this"/>
+                </p:inputText>
+                <p:message id="nameOnCardMsg" for="name-on-card" styleClass="error"/>
+
+                <p:outputLabel value="Expires"/>
+                <p:inputText id="expires" required="true" placeholder="MM/YYYY" validator="#{checkout.validateExpiresDate}"
+                             requiredMessage="Expires date is a required"
+                             value="#{checkout.expiryDate}">
+                    <f:ajax event="blur" render="expireMsg" execute="@this"/>
+                </p:inputText>
+                <p:message id="expireMsg" for="expires" styleClass="error"/>
+
+                <p:outputLabel value="CVC"/>
+                <p:inputText id="cvc" required="true" placeholder="example: 123"
+                             requiredMessage="CVC Code is a required field"
+                             validatorMessage="CVC consists of 3 digits"
+                             value="#{checkout.securityCode}">
+                    <f:validateRegex pattern="[0-9]{3}"/>
+                    <f:ajax event="blur" render="cvcMsg" execute="@this"/>
+                </p:inputText>
+                <p:message id="cvcMsg" for="cvc" styleClass="error"/>
+
+            </h:panelGrid>
+</ui:composition>
+</html>

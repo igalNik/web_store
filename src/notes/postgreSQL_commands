@@ -1,0 +1,6 @@
+
+start DB:
+pg_ctl -D /usr/local/var/postgres -l logfile start
+
+stop DB:
+pg_ctl -D /usr/local/var/postgres -l logfile stop

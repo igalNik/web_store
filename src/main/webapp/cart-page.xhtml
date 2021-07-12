@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Created by IntelliJ IDEA.
+  User: igal
+  Date: 11/03/2021
+  Time: 13:16
+-->
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+
+<h:head>
+    <title>JSF - Clothing Store</title>
+</h:head>
+
+<h:body>
+    <ui:composition template="resources/Templates/page_template.xhtml">
+        <ui:param name="pageTitle" value="Cart"/>
+        <ui:define name="panel-main">
+            <h:outputStylesheet  name="css/default.css"/>
+            <h:form id="cartForm">
+                <p:growl id="messages" showDetail="true"/>
+                <p:commandLink value="Continue Shoping" action="index"/>
+                <p:dataTable value="#{cartBean.lines}" var="line"
+                             styleClass="cart-table"
+                             headerClass="cart-header"
+                             rowClasses="cart-row-odd,cart-row-even"
+                             columnClasses="cart-col-image, cart-col-type, cart-col-derscription,
+                                            cart-col-price, cart-col-quantity, cart-col-amount"
+                             footerClass="shoppingcart-footer">
+
+                    <p:column>
+                        <f:facet name="header">Image</f:facet>
+                        <h:graphicImage library="images" name="#{line.item.imageName}"
+                                        style="height: 5em;
+                                        border-radius: 0.7em"/>
+                    </p:column>
+
+                    <p:column>
+                        <f:facet name="header">Item</f:facet>
+                        <p:commandLink value="#{line.item.type}" action="item-details-page.xhtml">
+                            <ui:param name="item" value="#{line.item}"/>
+                        </p:commandLink>
+                    </p:column>
+
+                    <p:column>
+                        <f:facet name="header">Description</f:facet>
+                        #{line.item.description}
+                    </p:column>
+
+                    <p:column>
+                        <f:facet name="header">Price</f:facet>
+                        <p:outputLabel value="#{line.item.price}">
+                            <f:convertNumber type="currency" currencySymbol="₪"/>
+                        </p:outputLabel>
+
+                    </p:column>
+
+                    <p:column>
+                        <f:facet name="header">Quantity</f:facet>
+                        #{line.quantity}
+                        <p:commandButton value="+" action="#{cartBean.addItem(line.item)}" update="@form">
+                            <f:ajax render="@form user-banner-form"/>
+                        </p:commandButton>
+                        <p:commandButton value="-" action="#{cartBean.removeItem(line.item)}" update="@form">
+                            <f:ajax render="@form user-banner-form" />
+                        </p:commandButton>
+                    </p:column>
+
+                    <p:column>
+                        <f:facet name="header">Amount</f:facet>
+                        #{line.amount}
+                        <f:facet name="footer">
+                            <p:outputLabel value="#{cartBean.totalAmount}" >
+                                <f:convertNumber type="currency" currencySymbol="₪"/>
+                            </p:outputLabel>
+                            </f:facet>
+                    </p:column>
+
+                </p:dataTable>
+                <p:commandButton value="Proceed to Checkout" action="checkout"/>
+
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</h:body>
+
+</html>

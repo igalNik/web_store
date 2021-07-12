@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<f:view>
+    <ui:composition template="resources/Templates/page_template.xhtml">
+        <ui:param name="pageTitle" value="Details"/>
+        <ui:define name="panel-main">
+            <h:form styleClass="item-details-description">
+                <ui:decorate template="resources/Templates/Common/item-details.xhtml">
+                    <ui:param name="item" value="#{item}"/>
+                </ui:decorate>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</f:view>
+</html>

@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+
+
+<f:view>
+    <section id="item-list">
+        <ui:composition template="resources/Templates/page_template.xhtml">
+            <ui:param name="pageTitle" value="Users"/>
+            <ui:define name="panel-main">
+                <h:form id="usersForm">
+
+                    <p:growl id="messages" showDetail="true"/>
+                    <p:commandButton value="Creat new user" action="user-registration-page"
+                                     styleClass="newButton" />
+                    <p:dataTable id="usersDT" value="#{userService.itemsEntityList}" var="user"
+                                 widgetVar="50" editable="true">
+                        <p:ajax event="rowEdit" listener="#{userService.onEdit}" update=":usersForm:messages" />
+                        <p:ajax event="rowEditCancel" listener="#{userService.onCancel}" update=":usersForm:messages" />
+
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="ID"/>
+                            </f:facet>
+                            <p:outputLabel value="#{user.id}"/>
+                        </p:column>
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="First name" />
+                            </f:facet>
+                            <h:outputLabel value="#{user.firstName}" />
+                        </p:column>
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Last name" />
+                            </f:facet>
+                            <h:outputLabel value="#{user.lastName}" />
+                        </p:column>
+
+                        <p:column style="width: 10em;">
+                            <f:facet name="header">
+                                <h:outputText value="User type" />
+                            </f:facet>
+                            <p:cellEditor>
+                                <f:facet name="output">
+                                    <h:outputText value="#{user.userType}" />
+                                </f:facet>
+                                <f:facet name="input">
+                                    <p:selectOneMenu id="seasonSelect" value="#{user.userType}">
+                                        <f:selectItem  itemLabel="Manager" itemValue="Manager"/>
+                                        <f:selectItem  itemLabel="Client" itemValue="Client"/>
+                                    </p:selectOneMenu>
+                                </f:facet>
+                            </p:cellEditor>
+                        </p:column>
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="ID number" />
+                            </f:facet>
+                            <h:outputLabel value="#{user.userId}" />
+                        </p:column>
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Phone" />
+                            </f:facet>
+                            <h:outputLabel value="#{user.phone}" />
+                        </p:column>
+
+                        <p:column style="width: 10em;">
+                            <f:facet name="header">
+                                <h:outputText value="E-mail" />
+                            </f:facet>
+                            <h:outputText value="#{user.email}" />
+                        </p:column>
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="City" />
+                            </f:facet>
+                            <h:outputLabel value="#{user.city}" />
+                        </p:column>
+
+                        <p:column style="width: 10em;">
+                            <f:facet name="header">
+                                <h:outputText value="Address" />
+                            </f:facet>
+                            <h:outputText value="#{user.address}" />
+                        </p:column>
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="ZIP" />
+                            </f:facet>
+                            <h:outputText value="#{user.zip}"/>
+                        </p:column>
+
+
+                        <p:column headerText="Edit" >
+                            <p:rowEditor/>
+                        </p:column>
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Delete" />
+                            </f:facet>
+                            <p:commandButton value="Remove" action="#{userService.onRemove(user)}"
+                                             update="usersDT :usersForm:messages"
+                                             style="background-color: #e35353">
+
+                                <f:ajax render="usersDT"/>
+                            </p:commandButton>
+                        </p:column>
+                    </p:dataTable>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </section>
+
+</f:view>
+
+
+</html>

@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+
+
+<f:view>
+    <section id="item-list">
+        <ui:composition template="resources/Templates/page_template.xhtml">
+            <ui:param name="pageTitle" value="Orders"/>
+            <ui:define name="panel-main">
+                <h:form id="form1">
+                    <p:growl id="messages" showDetail="true"/>
+                    <h:commandLink value="back to Orders" action="orders-management"/>
+                    <p:dataTable value="#{itemLinesViewBean.order.items}" var="line"  widgetVar="50" style="width: 60px;" editable="true">
+                        <p:ajax event="rowEdit" listener="#{orderService.onEdit}" update=":form1:messages" />
+                        <p:ajax event="rowEditCancel" listener="#{orderService.onCancel}" update=":form1:messages" />
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Image"/>
+                            </f:facet>
+                            <p:graphicImage library="images" name="#{line.item.imageName}"
+                                            style="height: 5em;
+                                        border-radius: 0.7em"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="ID" />
+                            </f:facet>
+                            <h:outputText value="#{line.item.id}" />
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Gender" />
+                            </f:facet>
+                            <h:outputText value="#{line.item.gender}" />
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Type" />
+                            </f:facet>
+                            <h:outputText value="#{line.item.type}" />
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Style"/>
+                            </f:facet>
+                            <h:outputText value="#{line.item.style}" />
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Color" />
+                            </f:facet>
+                            <h:outputText value="#{line.item.color}" />
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Size" />
+                            </f:facet>
+                            <h:outputText value="#{line.item.size}" />
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Quantity" />
+                            </f:facet>
+                            <h:outputText value="#{line.quantity}" />
+
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Price" />
+                            </f:facet>
+                            <h:outputText value="#{line.item.price}" >
+                                <f:convertNumber type="currency" currencySymbol="₪"/>
+                            </h:outputText>
+                        </p:column>
+                        <p:column style="background-color: #a2bbe6b5">
+                            <f:facet name="header">
+                                <h:outputText value="Total Amount" />
+                            </f:facet>
+                            <h:outputText value="#{line.amount}" >
+                                <f:convertNumber type="currency" currencySymbol="₪"/>
+                            </h:outputText>
+                        </p:column>
+
+
+                    </p:dataTable>
+
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </section>
+
+</f:view>
+
+
+</html>
